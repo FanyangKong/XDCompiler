@@ -1,0 +1,8 @@
+--------------- 函数f(t)=t的图形  -----------------
+ORIGIN IS (100, 300);		-- 设置原点的偏移量
+ROT IS 0;				-- 设置旋转角度(不旋转)
+SCALE IS (1, 1);			-- 设置横坐标和纵坐标的比例
+FOR T FROM 0 TO 200 STEP 1 DRAW (t, 0); -- 横坐标的轨迹（纵坐标为0）
+FOR T FROM 0 TO 150 STEP 1 DRAW (0, -t);-- 纵坐标的轨迹（横坐标为0）
+FOR T FROM 0 TO 120 STEP 1 DRAW (t, -t); -- 函数f(t)=t的轨迹
+SIN COS AS &  **
