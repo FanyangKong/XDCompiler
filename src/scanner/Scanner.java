@@ -18,7 +18,7 @@ public class Scanner {
     private String tokenBuffer = "";
     private File file;
     private BufferedReader bf;
-    private int lineNo = 1;
+    private int lineNo = 0;
 
     private Scanner(String path) {
         tokens = new LinkedList<>();
@@ -45,9 +45,6 @@ public class Scanner {
     }
 
     public char getChar() {
-        /**
-         * todo 处理index下标越界问题
-         */
         if (index < content.length()) {
             return content.charAt(index++);
         } else {
@@ -233,6 +230,7 @@ public class Scanner {
             backChar();
             c = getChar();
             if (c == '.') {
+                addCharToTokenString(c);
                 while (dig.matcher((c = getChar()) + "").matches()) {
                     addCharToTokenString(c);
                 }
