@@ -1,4 +1,6 @@
+import parser.Parser;
 import scanner.Scanner;
+import util.Log;
 
 /**
  * Created by KongFanyang on 2016/11/28.
@@ -6,14 +8,19 @@ import scanner.Scanner;
 public class Test {
     public static void main(String[] args) {
 
+        Log.log(true);
+
         String path = "src/Hello";
 
-        Scanner.init(path);
+        //Scanner.init(path);
 
+        //Scanner.printTokens();
+
+        //Scanner.close();
+
+        Parser parser = Parser.newInstance(path);
         Scanner.printTokens();
-
-        Scanner.close();
-
+        parser.program();
 
     }
 }

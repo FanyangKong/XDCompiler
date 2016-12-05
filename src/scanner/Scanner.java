@@ -1,6 +1,6 @@
 package scanner;
 
-import literial.Constants;
+import util.Constants;
 
 import java.io.*;
 import java.util.LinkedList;
@@ -18,7 +18,7 @@ public class Scanner {
     private String tokenBuffer = "";
     private File file;
     private BufferedReader bf;
-    private int lineNo;
+    private int lineNo = 1;
 
     private Scanner(String path) {
         tokens = new LinkedList<>();
@@ -101,20 +101,27 @@ public class Scanner {
             emptyTokenString();
             while ((c = getChar()) != '\0') {
                 Token token = new Token(Token_Type.ERRTOKEN, "", 0, null);
+                token.setLinNo(lineNo);
                 if (isSpace(c)) {
                     continue;
                 } else if (isAlpha(c)) {
                     token.lexeme = tokenBuffer;
                     //查找TokenTable中是否有该关键字
-                    // todo 如果关键字不在TokenTable中，可能为自定义变量名
                     for (int i = 0; i < Constants.TokenTable.length; i++) {
-                        if (tokenBuffer.equals(Constants.TokenTable[i].lexeme)) {
+                        if (tokenBuffer.toUpperCase().equals(Constants.TokenTable[i].lexeme)) {//tokenBuffer的大写形式
                             token.value = Constants.TokenTable[i].value;
                             token.type = Constants.TokenTable[i].type;
                             token.method = Constants.TokenTable[i].method;
                             break;
                         }
                     }
+
+                    //如果TokenTable中查不到该关键字，则为错误关键字
+                    if (token.type == Token_Type.ERRTOKEN) {
+                        token.lexeme = tokenBuffer;
+                        token.value = lineNo;
+                    }
+
                     tokens.add(token);
                 } else if (isDigit(c)) {
                     token.lexeme = tokenBuffer;
@@ -181,9 +188,10 @@ public class Scanner {
 
                 emptyTokenString();
             }
-            index = 0;
+            resetIndex();
         }
 
+        tokens.add(new Token(Token_Type.NONTOKEN, "", 0, null));
     }
 
 

@@ -1,4 +1,4 @@
-package literial;
+package util;
 
 import scanner.Token;
 import scanner.Token_Type;
