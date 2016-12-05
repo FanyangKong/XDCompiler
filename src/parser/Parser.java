@@ -1,11 +1,14 @@
 package parser;
 
+import graphic.XDGraphics;
 import scanner.MathMethod;
 import scanner.Scanner;
 import scanner.Token;
 import scanner.Token_Type;
+import util.Calculate;
 import util.Log;
 
+import javax.swing.*;
 import java.util.List;
 
 /**
@@ -21,6 +24,9 @@ public class Parser {
         //调用词法分析器
         startScanner(path);
         fetchToken();
+        //以下两个移至main函数显示调用
+        //program();
+        //drawGraphics();
     }
 
     private void startScanner(String path) {
@@ -44,6 +50,17 @@ public class Parser {
         }
         Log.back("program");
     }
+
+    public void drawGraphics() {
+        JFrame mw = new JFrame("绘图窗口");
+        mw.setSize(800, 600);
+
+        XDGraphics.MyPanel mp = new XDGraphics.MyPanel();
+
+        mw.getContentPane().add(mp);
+        mw.setVisible(true);
+    }
+
 
     private void statements() {
         Log.enter("statement");
@@ -74,10 +91,14 @@ public class Parser {
         matchToken(Token_Type.ORIGIN);
         matchToken(Token_Type.IS);
         matchToken(Token_Type.L_BRACKET);
-        expression();
+        tmp = expression();
+        double origin_x = Calculate.getExprValue(tmp);
         matchToken(Token_Type.COMMA);
-        expression();
+        tmp = expression();
+        double origin_y = Calculate.getExprValue(tmp);
         matchToken(Token_Type.R_BRACKET);
+
+        XDGraphics.setOrigin(origin_x, origin_y);
     }
 
     private void scaleStatement() {
@@ -89,9 +110,13 @@ public class Parser {
         matchToken(Token_Type.IS);
         matchToken(Token_Type.L_BRACKET);
         tmp = expression();
+        double scale_x = Calculate.getExprValue(tmp);
         matchToken(Token_Type.COMMA);
         tmp = expression();
+        double scale_y = Calculate.getExprValue(tmp);
         matchToken(Token_Type.R_BRACKET);
+
+        XDGraphics.setScale(scale_x, scale_y);
 
         Log.back("scaleStatement");
     }
@@ -105,6 +130,9 @@ public class Parser {
         matchToken(Token_Type.IS);
         tmp = expression();
 
+        double rot_ang = Calculate.getExprValue(tmp);
+        XDGraphics.setRot_ang(rot_ang);
+
         Log.back("rotStatement");
     }
 
@@ -117,16 +145,21 @@ public class Parser {
         matchToken(Token_Type.T);
         matchToken(Token_Type.FROM);
         start_ptr = expression();
+        double start = Calculate.getExprValue(start_ptr);
         matchToken(Token_Type.TO);
         end_ptr = expression();
+        double end = Calculate.getExprValue(end_ptr);
         matchToken(Token_Type.STEP);
         step_ptr = expression();
+        double step = Calculate.getExprValue(step_ptr);
         matchToken(Token_Type.DRAW);
         matchToken(Token_Type.L_BRACKET);
         x_ptr = expression();
         matchToken(Token_Type.COMMA);
         y_ptr = expression();
         matchToken(Token_Type.R_BRACKET);
+
+        XDGraphics.addFuncPoint(start, end, step, x_ptr, y_ptr);
 
         Log.back("forStatement");
     }

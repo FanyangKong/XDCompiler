@@ -12,15 +12,13 @@ public class Test {
 
         String path = "src/Hello";
 
-        //Scanner.init(path);
-
-        //Scanner.printTokens();
-
-        //Scanner.close();
-
         Parser parser = Parser.newInstance(path);
+
         Scanner.printTokens();
+
         parser.program();
+
+        parser.drawGraphics();
 
     }
 }

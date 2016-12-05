@@ -1,5 +1,16 @@
 --------------- 函数f(t)=t的图形  -----------------
-ORIGIN IS (-16+5**3/COS(T), 300);		-- 设置原点的偏移量
-ROT IS -16+5**3/COS(T);				-- 设置旋转角度(不旋转)
-SCALE IS (1, 2)			-- 设置横坐标和纵坐标的比例
-FOR T FROM 0 TO 200 STEP 1 DRAW (T, 0); -- 横坐标的轨迹（纵坐标为0）
+ORIGIN IS (400, 200);		                                     // 设置原点的偏移量
+ROT IS 0;				                                         // 设置旋转角度
+SCALE IS (150, 50);			                                     // 设置横坐标和纵坐标的比例
+FOR T FROM 0 TO 2*PI STEP PI/20 DRAW (SIN(T), cos(T));           // 图形轨迹
+
+rot is pi/3;
+for t from 0 to 2*pi step pi/20 draw (sin(t), cos(t));
+
+rot is pi/3*2;
+FOR T FROM 0 TO 2*PI STEP pi/20 DRAW (SIN(T), cos(T));
+
+rot is 0;
+origin is (0, 400);
+scale is (4,4);
+for t from 0 to 500 step 1 draw ( t , -sin(t));

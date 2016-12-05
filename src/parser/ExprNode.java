@@ -6,7 +6,7 @@ import scanner.Token_Type;
 /**
  * Created by KongFanyang on 2016/12/4.
  */
-public class ExprNode {
+public class ExprNode implements MathMethod{
     public Token_Type opCode;
     public ExprNode left, right; //二元运算
     public ExprNode child;
@@ -14,4 +14,9 @@ public class ExprNode {
 
     public double caseConst;     // 常数， 绑定右值
     public double caseParmPtr;   // 参数T， 绑定左值
+
+    @Override
+    public double method(double d) {
+        return method.method(d);
+    }
 }
